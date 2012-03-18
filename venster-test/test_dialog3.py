@@ -4,6 +4,7 @@ has_venster = True
 try:
 	from venster.wtl import *
 	from venster.dialog import *
+	from venster import comctl
 except:
 	has_venster = False
 	print('VENSTER MODULE IS NOT ACCESSIBLE')
