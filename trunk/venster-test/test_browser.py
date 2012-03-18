@@ -124,12 +124,12 @@ class MyForm(form.Form):
         form.Form.__init__(self)      
 
     def OnCreate(self, event):
-        aBrowser = MyBrowser(parent = self)
+        aBrowser = MyBrowser(url = "test_html.html", parent = self)
         self.controls.Add(form.CTRL_VIEW, aBrowser)
         self.controls.Add(form.CTRL_STATUSBAR, comctl.StatusBar(parent = self))
 
-        import os
-        aBrowser.Navigate("%s%stest_html.html" % (os.getcwd(), os.sep))
+        #import os
+        #aBrowser.Navigate("%s%stest_html.html" % (os.getcwd(), os.sep))
 
 
 if __name__ == '__main__':

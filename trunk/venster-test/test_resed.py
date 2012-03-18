@@ -181,7 +181,7 @@ class intercept(object):
         self.source = source
         for childWindow in source.EnumChildWindows():
             intercept(target, childWindow)
-        
+
     def WndProc(self, hWnd, nMsg, wParam, lParam):
 ##        print "control: ", msgFormatter.format(nMsg, wParam, lParam)
         callTarget = False
@@ -196,17 +196,17 @@ class intercept(object):
             callTarget = True
         elif nMsg == WM_SETCURSOR:
             callTarget = True
-            
+
         if callTarget:
             handled, result = self.target.WndProc(hWnd, nMsg, wParam, lParam)
             return result
         else:
             return CallWindowProc(self.oldProc, hWnd, nMsg, wParam, lParam)
-        
+
 class Form(form.Form):
     _form_accels_ = [(FCONTROL|FVIRTKEY, ord("N"), form.ID_NEW),
                       (FCONTROL|FVIRTKEY, ord("O"), form.ID_OPEN),]
-    
+
     _form_menu_ = [(MF_POPUP, "&File", 
                     [(MF_STRING, "&New\tCtrl+N", form.ID_NEW),
                      (MF_SEPARATOR, ),
@@ -215,7 +215,7 @@ class Form(form.Form):
                    ]
 
     _window_title_ = "Venster Resource Editor"
-    
+
     def __init__(self):
         form.Form.__init__(self)      
 
@@ -225,20 +225,19 @@ class Form(form.Form):
         self.controls.Add(form.CTRL_STATUSBAR, comctl.StatusBar(parent = self))
 
     canvas = property(lambda self: self.controls[form.CTRL_VIEW])
-    
+
     def OnNew(self, event):
 ##         self.button = comctl.Button("Click Me!", parent = self.canvas,
 ##                                     rcPos = RECT(100, 100, 250, 325))
         
 ##         intercept(self.canvas, self.button)
 
-        self.combo = comctl.ComboBox(parent = self.canvas,
-                                     rcPos = RECT(275, 100, 500, 125))
+        self.combo = comctl.ComboBox(parent = self.canvas, rcPos = RECT(275, 100, 500, 125))
 
         intercept(self.canvas, self.combo)
-        
+
     cmd_handler(form.ID_NEW)(OnNew)
-   
+
 if __name__ == '__main__':
     mainForm = Form()
     mainForm.ShowWindow()
