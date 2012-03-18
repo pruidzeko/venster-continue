@@ -371,8 +371,8 @@ class ScrollBar(DialogItemTemplate):
     _window_style_ = WS_CHILD|WS_VISIBLE|WS_TABSTOP|SBS_VERT|SBS_RIGHTALIGN
 
 class ComboBox(DialogItemTemplate):
-    _window_class_ = COMBOBOX
-    _window_style_ = WS_CHILD|WS_VISIBLE|WS_TABSTOP|CBS_SIMPLE
+	_window_class_ = COMBOBOX
+	_window_style_ = WS_VISIBLE|WS_CHILD|WS_OVERLAPPED|WS_VSCROLL|WS_TABSTOP|CBS_DROPDOWNLIST
 
 class RadioButton(DialogItemTemplate):
     _window_class_ = PUSHBUTTON

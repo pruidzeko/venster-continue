@@ -261,9 +261,6 @@ CCS_NOPARENTALIGN = 8
 CCS_NORESIZE = 4
 CCS_TOP = 1
 
-
-CBS_DROPDOWN = 2
-
 RBBS_BREAK = 1
 RBBS_FIXEDSIZE = 2
 RBBS_CHILDEDGE = 4
@@ -477,6 +474,10 @@ TRACKBAR_CLASS = TRACKBAR_CLASSA
 
 EDIT = "Edit"
 BUTTON = "BUTTON"
+
+WC_COMBOBOXW = u"ComboBox"
+WC_COMBOBOXA = "ComboBox"
+WC_COMBOBOX = WC_COMBOBOXA
 
 WC_COMBOBOXEXW = u"ComboBoxEx32"
 WC_COMBOBOXEXA = "ComboBoxEx32"
@@ -746,18 +747,107 @@ class AutoCheckBox(CheckBox):
 	_window_style_ = WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX
 
 class StatusBar(Window):
-    _window_class_ = STATUSCLASSNAME
-    _window_style_ = WS_CHILD | WS_VISIBLE | SBS_SIZEGRIP
+	_window_class_ = STATUSCLASSNAME
+	_window_style_ = WS_CHILD | WS_VISIBLE | SBS_SIZEGRIP
 
-    def Simple(self, fSimple):
-        self.SendMessage(SB_SIMPLE, fSimple, 0)
+	def Simple(self, fSimple):
+		self.SendMessage(SB_SIMPLE, fSimple, 0)
 
-    def SetText(self, txt):
-        self.SendMessage(SB_SETTEXT, (255 | SBT_NOBORDERS), txt)
+	def SetText(self, txt):
+		self.SendMessage(SB_SETTEXT, (255 | SBT_NOBORDERS), txt)
+
+# Combo Box return Values
+CB_OKAY             = 0
+CB_ERR              = -1
+CB_ERRSPACE         = -2
+# Combo Box messages
+CB_GETEDITSEL               = 0x0140
+CB_LIMITTEXT                = 0x0141
+CB_SETEDITSEL               = 0x0142
+CB_ADDSTRING                = 0x0143
+CB_DELETESTRING             = 0x0144
+CB_DIR                      = 0x0145
+CB_GETCOUNT                 = 0x0146
+CB_GETCURSEL                = 0x0147
+CB_GETLBTEXT                = 0x0148
+CB_GETLBTEXTLEN             = 0x0149
+CB_INSERTSTRING             = 0x014A
+CB_RESETCONTENT             = 0x014B
+CB_FINDSTRING               = 0x014C
+CB_SELECTSTRING             = 0x014D
+CB_SETCURSEL                = 0x014E
+CB_SHOWDROPDOWN             = 0x014F
+CB_GETITEMDATA              = 0x0150
+CB_SETITEMDATA              = 0x0151
+CB_GETDROPPEDCONTROLRECT    = 0x0152
+CB_SETITEMHEIGHT            = 0x0153
+CB_GETITEMHEIGHT            = 0x0154
+CB_SETEXTENDEDUI            = 0x0155
+CB_GETEXTENDEDUI            = 0x0156
+CB_GETDROPPEDSTATE          = 0x0157
+CB_FINDSTRINGEXACT          = 0x0158
+CB_SETLOCALE                = 0x0159
+CB_GETLOCALE                = 0x015A
+if WINVER >= 0x0400:
+	CB_GETTOPINDEX              = 0x015b
+	CB_SETTOPINDEX              = 0x015c
+	CB_GETHORIZONTALEXTENT      = 0x015d
+	CB_SETHORIZONTALEXTENT      = 0x015e
+	CB_GETDROPPEDWIDTH          = 0x015f
+	CB_SETDROPPEDWIDTH          = 0x0160
+	CB_INITSTORAGE              = 0x0161
+if WINVER >= 0x0501:
+	CB_GETCOMBOBOXINFO          = 0x0164
+if WINVER >= 0x0501:
+	CB_MSGMAX                   = 0x0165
+elif WINVER >= 0x0400:
+	CB_MSGMAX                   = 0x0162
+else:
+	CB_MSGMAX                   = 0x015B
+#elif _WIN32_WCE >= 0x0400:
+#	CB_MSGMAX                   = 0x0163
+#if _WIN32_WCE >= 0x0400:
+#	CB_MULTIPLEADDSTRING        = 0x0163
+
+# Combo Box styles
+CBS_SIMPLE            = 0x0001L
+CBS_DROPDOWN          = 0x0002L
+CBS_DROPDOWNLIST      = 0x0003L
+CBS_OWNERDRAWFIXED    = 0x0010L
+CBS_OWNERDRAWVARIABLE = 0x0020L
+CBS_AUTOHSCROLL       = 0x0040L
+CBS_OEMCONVERT        = 0x0080L
+CBS_SORT              = 0x0100L
+CBS_HASSTRINGS        = 0x0200L
+CBS_NOINTEGRALHEIGHT  = 0x0400L
+CBS_DISABLENOSCROLL   = 0x0800L
+if WINVER >= 0x0400:
+	CBS_UPPERCASE         = 0x2000L
+	CBS_LOWERCASE         = 0x4000L
 
 class ComboBox(Window):
-    _window_class_ = WC_COMBOBOXEX
-    _window_style_ = WS_VISIBLE | WS_CHILD | CBS_DROPDOWN
+	_window_class_ = WC_COMBOBOX
+	_window_style_ = WS_VISIBLE | WS_CHILD | WS_OVERLAPPED | WS_VSCROLL | WS_TABSTOP | CBS_DROPDOWNLIST
+
+	def AddString(self, value = ''):
+		'return index of item is added'
+		return self.SendMessage(CB_ADDSTRING, 0, value)
+
+	def DeleteString(self, index = 0):
+		self.SendMessage(CB_DELETESTRING, index)
+
+	def GetCount(self):
+		return self.SendMessage(CB_GETCOUNT)
+
+	def GetCurrentSelection(self):
+		return self.SendMessage(CB_GETCURSEL)
+
+	def SetCurrentSelection(self, index = 0):
+		self.SendMessage(CB_SETCURSEL, index)
+
+class ComboBoxEx(ComboBox):
+	_window_class_ = WC_COMBOBOXEX
+	_window_style_ = WS_VISIBLE | WS_CHILD | CBS_DROPDOWN
 
 class Edit(Window):
     _window_class__ = EDIT
@@ -1079,7 +1169,7 @@ class ImageList(WindowsObject):
                 break
             i += 1
 
-        
+
 def InitCommonControls(dwICC):
     iccex = INITCOMMONCONTROLSEX()
     iccex.dwSize = sizeof(INITCOMMONCONTROLSEX)
