@@ -27,9 +27,9 @@ from types import IntType, LongType
 
 from ctypes import *
 
-from venster.windows import *
-from venster.wtl_core import *
-from venster import comctl
+from windows import *
+from wtl_core import *
+from comctl import *
 
 memcpy = cdll.msvcrt.memcpy
 
