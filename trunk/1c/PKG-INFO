@@ -1,0 +1,28 @@
+Metadata-Version: 1.0
+Name: oleones
+Version: 0.1
+Summary: ctypes python module for 1C.
+Home-page: http://venster-continue.googlecode.com
+Author: Maxim Kolosov
+Author-email: pyirrlicht@gmail.com
+License: BSD
+Download-URL: http://venster-continue.googlecode.com
+Description: The 1C is Financial Enterprise Application.
+Keywords: interface,comtypes,database,interprise,finance
+Platform: ALL
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Environment :: Win32 (MS Windows)
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: Intended Audience :: Financial and Insurance Industry
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: Science/Research 
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: Win32 (MS Windows)
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Utilities
+Requires: Python
+Requires: comtypes
