@@ -1,0 +1,2 @@
+Venster is small, fast access to native Microsoft Windows GUI API for Python users, based on ctypes and ActiveX part is based on comtypes.<br><br>Author of original venster is Henk Punt (see <a href='https://github.com/toymachine/venster'>https://github.com/toymachine/venster</a>).<br>
+Author of ctypes and comtypes is Thomas Heller (see <a href='http://sourceforge.net/users/theller'>http://sourceforge.net/users/theller</a>).<br><br><a href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=68D3Z5B37TGLY'>PayPal</a> donate
